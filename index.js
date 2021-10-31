@@ -80,15 +80,19 @@ async function run() {
 
         })
 
-
-        // //DELETE API
-        // app.delete('/services/:id', async (req, res) => {
-        //     const id = req.params.id;
-        //     const query = { _id: ObjectId(id) };
-        //     const result = await serviceCollection.deleteOne(query);
-        //     res.json(result);
-        // })
-
+        //Processing
+        app.put('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) };
+            const updateDoc = {
+                $set: {
+                    status: "processing"
+                }
+            }
+            const result = await ordersCollection.updateOne(filter, updateDoc)
+            res.json(result)
+        }
+        )
     }
 
     finally {
